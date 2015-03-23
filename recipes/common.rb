@@ -61,6 +61,8 @@ script 'install_storm' do
   not_if { ::File.exist?("#{install_dir}/#{storm_version}") }
 end
 
+node.default['storm']['storm_yaml']['storm.zookeeper.servers'].reject!(&:empty?)
+
 template "#{install_dir}/#{storm_version}/conf/storm.yaml" do
   source 'storm.yaml.erb'
   mode '0440'
